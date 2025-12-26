@@ -34,22 +34,39 @@ namespace CleanArchitecture.Mrp.Infrastructure.Security
 
             return new LoginResponseDto
             {
+                UserId=user.Id,
                 AccessToken = CreateJwt(user),
                 RefreshToken = refreshToken
             };
         }
 
-        public async Task<User?> ValidateRefreshTokenAsync(Guid userId, string refreshToken)
+        public async Task<LoginResponseDto?> ValidateRefreshTokenAsync(Guid userId, string refreshToken)
         {
             var user = await _userRepository.GetByIdAsync(userId);
             if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
                 return null;
 
-            return TokenHasher.Hash(refreshToken) == user.RefreshTokenHash
-                ? user
-                : null;
-        }
+            if (TokenHasher.Hash(refreshToken) != user.RefreshTokenHash)
+                return null;
+              
 
+
+            return new LoginResponseDto
+            {
+                UserId = user.Id,
+                AccessToken = CreateJwt(user),
+                RefreshToken = await GenerateAndSaveRefreshTokenAsync(user)
+            };
+        }
+        private async Task<string> GenerateAndSaveRefreshTokenAsync(User user)
+        {
+            var refreshToken = GenerateRefreshToken();
+            user.RefreshTokenHash = TokenHasher.Hash(refreshToken);
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+           await _userRepository.UpdateAsync(user);
+            
+            return refreshToken;
+        }
         private string CreateJwt(User user)
         {
             var claims = new List<Claim>

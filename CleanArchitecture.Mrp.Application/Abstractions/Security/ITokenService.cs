@@ -6,6 +6,6 @@ namespace CleanArchitecture.Mrp.Application.Abstractions.Security
     public interface ITokenService
     {
         public  Task<LoginResponseDto> CreateTokenResponseAsync(User user);
-        public  Task<User?> ValidateRefreshTokenAsync(Guid userId, string refreshToken);
+        public  Task<LoginResponseDto?> ValidateRefreshTokenAsync(Guid userId, string refreshToken);
     }
 }

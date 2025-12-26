@@ -9,7 +9,9 @@ namespace CleanArchitecture.Mrp.Application.Abstractions.Repositories
 {
     public interface IUserRepository
     {
+     
         Task<User?> GetByUserNameAsync(string userName);
+        public Task<List<User>> GetListWithFilter();
         Task<User?> GetByIdAsync(Guid id);
         Task<bool> ExistsAsync(string userName);
         Task UpdateAsync(User user);

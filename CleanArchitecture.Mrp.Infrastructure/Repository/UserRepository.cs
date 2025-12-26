@@ -19,8 +19,10 @@ namespace CleanArchitecture.Mrp.Infrastructure.Repository
             _context = context;
         }
 
-        public Task<User?> GetByUsernameAsync(string username)
-            => _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        public async Task<List<User>> GetListWithFilter()
+        {
+          return await _context.Users.AsNoTracking().ToListAsync();
+        }
 
         public Task<User?> GetByIdAsync(Guid id)
             => _context.Users.FirstOrDefaultAsync(x=>x.Id==id);
@@ -42,6 +44,7 @@ namespace CleanArchitecture.Mrp.Infrastructure.Repository
 
         public Task<User?> GetByUserNameAsync(string userName)
              => _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
-        
+
+       
     }
 }

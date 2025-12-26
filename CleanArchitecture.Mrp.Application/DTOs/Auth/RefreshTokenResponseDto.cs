@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Mrp.Application.DTOs.Auth
 {
-    public class LoginResponseDto
+    public class RefreshTokenResponseDto
     {
-        public Guid UserId { get; set; }
-        public string AccessToken { get; set; } = null!;
-        public string RefreshToken { get; set; } = null!;
+        public required string AccessToken { get; set; }
+        public required string RefreshToken { get; set; }
     }
 }

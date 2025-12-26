@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Mrp.Api.Models.BaseModels;
 using CleanArchitecture.Mrp.Application.Exceptions;
+using FluentValidation;
 
 namespace CleanArchitecture.Mrp.Api.Middlewares
 {
@@ -44,6 +45,32 @@ namespace CleanArchitecture.Mrp.Api.Middlewares
                 traceId
                  );
             }
+            catch (ValidationException ex)
+            {
+                _logger.LogWarning(
+                   ex,
+                   "Validation exception | TraceId: {TraceId} | Detail: {Detail}",
+                   traceId,
+                    ex.Message
+                 );
+                var errors = ex.Errors
+              .GroupBy(e => e.PropertyName)
+              .ToDictionary(
+                  g => g.Key,
+                  g => g.Select(e => e.ErrorMessage).ToArray()
+              );
+
+                var clientMessage =
+              "Bir hata oluştu";
+              
+                await WriteResponse(
+                context,
+                 StatusCodes.Status400BadRequest,
+                "Bir hata oluştu",
+                traceId,
+                errors
+                 );
+            }
             catch (Exception ex)
             {
 
@@ -66,13 +93,14 @@ namespace CleanArchitecture.Mrp.Api.Middlewares
             HttpContext context,
             int statusCode,
             string message,
-            string traceId
+            string traceId,
+             Dictionary<string, string[]>? errors = null
             )
         {
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
 
-            var response = ApiResponse<object>.Fail(message, traceId);
+            var response = ApiResponse<object>.Fail(message, traceId, errors);
 
             await context.Response.WriteAsJsonAsync(response);
         }

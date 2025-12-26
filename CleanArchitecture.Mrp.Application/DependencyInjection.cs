@@ -1,9 +1,10 @@
-﻿using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login;
+﻿using CleanArchitecture.Mrp.Application.Behaviors;
+using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login;
 using CleanArchitecture.Mrp.Application.Mapping;
 using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchitecture.Mrp.Application
 {
@@ -26,8 +27,11 @@ namespace CleanArchitecture.Mrp.Application
 
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
-            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
-         
+            services.AddTransient(
+         typeof(IPipelineBehavior<,>),
+         typeof(ValidationBehavior<,>)
+     );
+ 
             return services;
         }
     }

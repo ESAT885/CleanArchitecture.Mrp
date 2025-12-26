@@ -14,15 +14,16 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddCustomApiBehavior();
+builder.Services.AddApplication();
+//builder.Services.AddCustomApiBehavior();
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase")));
-builder.Services.AddApplication();
+
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddCustomApiBehavior();
+
 
 
 var app = builder.Build();
