@@ -8,7 +8,7 @@ using CleanArchitecture.Mrp.Domain.Models.Entities;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login;
+using CleanArchitecture.Mrp.Application.DTOs.Auth;
 
 namespace CleanArchitecture.Mrp.Infrastructure.Security
 {

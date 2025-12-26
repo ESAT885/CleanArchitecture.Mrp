@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login;
+﻿using CleanArchitecture.Mrp.Application.DTOs.Auth;
 using CleanArchitecture.Mrp.Domain.Models.Entities;
 
 namespace CleanArchitecture.Mrp.Application.Abstractions.Security

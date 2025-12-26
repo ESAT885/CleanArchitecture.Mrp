@@ -1,13 +1,15 @@
-﻿using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login;
+﻿using CleanArchitecture.Mrp.Application.DTOs.Auth;
+using CleanArchitecture.Mrp.Application.Exceptions;
+using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Mrp.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+  
+    public class AuthController : BaseController
     {
         private readonly IMediator _mediator;
 
@@ -19,7 +21,16 @@ namespace CleanArchitecture.Mrp.Api.Controllers
         public async Task<IActionResult> Login(LoginRequestDto request)
         {
             var result = await _mediator.Send(new LoginCommand(request));
-            return result is null ? Unauthorized() : Ok(result);
+            if (result is null)
+                throw new BusinessException("asdasd", "Geçersiz  kullanıcı ismi ve şifresi");
+            return Success<LoginResponseDto>(result);
+        }
+        [Authorize]
+        [HttpGet("AuthenticateOnlyEndpoint")]
+        public IActionResult AuthenticateOnlyEndpoint()
+        {
+            var userName = User?.Identity?.Name;
+            return Success(userName);
         }
     }
 }

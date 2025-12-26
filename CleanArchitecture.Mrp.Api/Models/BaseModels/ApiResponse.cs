@@ -15,6 +15,6 @@
             string message,
             string traceId,
             Dictionary<string, string[]>? errors = null)
-            => new() { Success = false, Message = message, Errors = errors, };
+            => new() { Success = false, Message = message, Errors = errors, TraceId = traceId };
     }
 }

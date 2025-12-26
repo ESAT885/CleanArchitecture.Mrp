@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login
+namespace CleanArchitecture.Mrp.Application.DTOs.Auth
 {
     public class LoginRequestDto
     {
