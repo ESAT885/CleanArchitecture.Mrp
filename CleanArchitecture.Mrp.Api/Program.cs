@@ -21,7 +21,7 @@ builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase")));
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
 

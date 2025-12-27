@@ -26,6 +26,7 @@ namespace CleanArchitecture.Mrp.Api.Controllers
                 throw new UnauthorizedException("Geçersiz yenileme belirteci", "Sağlanan yenileme belirteci geçersiz veya süresi dolmuş.");
             return Success<RefreshTokenResponseDto>(result);
         }
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto request)
         {

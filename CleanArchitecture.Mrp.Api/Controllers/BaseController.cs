@@ -1,9 +1,11 @@
 ﻿using CleanArchitecture.Mrp.Api.Models.BaseModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Mrp.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BaseController : ControllerBase

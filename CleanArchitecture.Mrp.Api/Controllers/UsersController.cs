@@ -11,7 +11,6 @@ namespace CleanArchitecture.Mrp.Api.Controllers
     public class UsersController : BaseController
     {
         private readonly IMediator _mediator;
-
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;

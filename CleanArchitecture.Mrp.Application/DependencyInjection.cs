@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Mrp.Application.Behaviors;
+﻿using CleanArchitecture.Mrp.Application.Abstractions.Repositories;
+using CleanArchitecture.Mrp.Application.Behaviors;
 using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Login;
 using CleanArchitecture.Mrp.Application.Mapping;
 using FluentValidation;
@@ -24,14 +25,10 @@ namespace CleanArchitecture.Mrp.Application
                 );
             });
             services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
-
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
-            services.AddTransient(
-         typeof(IPipelineBehavior<,>),
-         typeof(ValidationBehavior<,>)
-     );
- 
+            services.AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidationBehavior<,>));
+            
             return services;
         }
     }
