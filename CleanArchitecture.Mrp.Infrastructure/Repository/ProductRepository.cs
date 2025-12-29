@@ -7,6 +7,7 @@ using CleanArchitecture.Mrp.Application.Abstractions.Repositories;
 using CleanArchitecture.Mrp.Application.DTOs.Products;
 using CleanArchitecture.Mrp.Domain.Models.Entities;
 using CleanArchitecture.Mrp.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Mrp.Infrastructure.Repository
 {
@@ -18,9 +19,17 @@ namespace CleanArchitecture.Mrp.Infrastructure.Repository
         {
             _context = context;
         }
-        public async Task<Product> CreateProduct(Product product)
+        public async Task<Product?> GetByIdAsync(Guid id)
+           => await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<Product> CreateProductAsync(Product product)
         {
             _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return product;
+        }
+        public async Task<Product> UpdateProductAsync(Product product)
+        {
+            _context.Products.Update(product);
             await _context.SaveChangesAsync();
             return product;
         }

@@ -13,7 +13,7 @@ using MediatR;
 
 namespace CleanArchitecture.Mrp.Application.Features.Auth.Commands.Products.Create
 {
-    public class ProductUpdateCommandHandler(IProductRepository userRepository, IMapper mapper) : IRequestHandler<ProductCreateCommand, ProductDto?>
+    public class ProductUpdateCommandHandler(IProductRepository productRepository, IMapper mapper) : IRequestHandler<ProductCreateCommand, ProductDto?>
     {
      
 
@@ -21,7 +21,7 @@ namespace CleanArchitecture.Mrp.Application.Features.Auth.Commands.Products.Crea
         public async Task<ProductDto?> Handle(ProductCreateCommand request, CancellationToken cancellationToken)
         {
             var product = mapper.Map<Domain.Models.Entities.Product>(request.Request);
-            await userRepository.CreateProduct(product);
+            await productRepository.CreateProductAsync(product);
             var productDto = mapper.Map<ProductDto>(product);
             return productDto;
         }

@@ -2,6 +2,7 @@
 using CleanArchitecture.Mrp.Application.DTOs.Users;
 using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Products;
 using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Products.Create;
+using CleanArchitecture.Mrp.Application.Features.Auth.Commands.Products.Update;
 using CleanArchitecture.Mrp.Application.Features.Users.GetUsersWithFilter;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,15 @@ namespace CleanArchitecture.Mrp.Api.Controllers
 
             var result = await _mediator.Send(
                 new ProductCreateCommand(createProductDto));
+            return Success<ProductDto>(result);
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> Put([FromQuery] UpdateProductDto updateProductDto)
+        {
+
+            var result = await _mediator.Send(
+                new ProductUpdateCommand(updateProductDto));
             return Success<ProductDto>(result);
 
         }
